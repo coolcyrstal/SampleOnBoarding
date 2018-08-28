@@ -3,8 +3,9 @@ package com.example.chayent.sampleonboarding;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -27,6 +28,9 @@ public class OnBoardingActivity extends AppCompatActivity {
             R.drawable.onboarding_image_2,
             R.drawable.onboarding_image_3
     };
+    private int mViewPagerTotalPage;
+    private Animation animation_slide_up;
+    private Animation animation_slide_down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_on_boarding);
         ButterKnife.bind(this);
 
+        setAnimation();
         createOnBoardingViewPager();
         setCirclePageIndicator();
         setViewPagerListener();
@@ -45,28 +50,36 @@ public class OnBoardingActivity extends AppCompatActivity {
         viewPagerAdapter.addFrag(new PagerFragment(), "page_2");
         viewPagerAdapter.addFrag(new PagerFragment(), "page_3");
         viewPager.setAdapter(viewPagerAdapter);
+        mViewPagerTotalPage = viewPager.getAdapter().getCount();
     }
 
     private void setCirclePageIndicator() {
         circlePageIndicator.setViewPager(viewPager);
     }
 
-    private void setViewPagerListener(){
+    private void setViewPagerListener() {
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+//                onBoardingImage.setAlpha(1 - positionOffset);
+//                Log.d("checkposition", "" + position);
             }
 
             @Override
             public void onPageSelected(int position) {
+                onBoardingImage.startAnimation(animation_slide_up);
                 onBoardingImage.setImageResource(imageBackground[position]);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
+    }
+
+    private void setAnimation(){
+        animation_slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        animation_slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
     }
 }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
     android:orientation="vertical"
     tools:context=".PagerFragment">
 
@@ -18,6 +19,7 @@
         android:id="@+id/onboarding_view_pager_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:text="TEST"
         android:textColor="@color/colorAccent"
@@ -27,6 +29,7 @@
         android:id="@+id/onboarding_view_pager_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_gravity="left"
         android:text="Skip"
         android:textColor="@color/colorAccent"
