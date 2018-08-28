@@ -7,9 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class PagerFragment extends Fragment {
+
+    @BindView(R.id.onboarding_view_pager_image)
+    ImageView onBoardingViewPagerImage;
+    @BindView(R.id.onboarding_view_pager_description)
+    TextView onBoardingViewPagerDescription;
+    @BindView(R.id.onboarding_view_pager_skip)
+    TextView onBoardingSkip;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,6 +45,7 @@ public class PagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pager, container, false);
+        ButterKnife.bind(getActivity());
         return rootView;
     }
 
