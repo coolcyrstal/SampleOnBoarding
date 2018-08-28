@@ -36,6 +36,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         createOnBoardingViewPager();
         setCirclePageIndicator();
+        setViewPagerListener();
     }
 
     private void createOnBoardingViewPager() {
@@ -48,7 +49,10 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     private void setCirclePageIndicator() {
         circlePageIndicator.setViewPager(viewPager);
-        circlePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    }
+
+    private void setViewPagerListener(){
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -56,7 +60,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                onBoardingImage.setImageResource(imageBackground[position]);
             }
 
             @Override
