@@ -1,16 +1,13 @@
 package com.example.chayent.sampleonboarding;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -26,12 +23,12 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     @BindView(R.id.onboarding_image)
     ImageView onBoardingImage;
+    @BindView(R.id.onboarding_next_image)
+    ImageView onBoardingNextImage;
 
     private int mPreviousPosition = 0;
-    private Animation mAnimationSlideUp;
-    private Animation mAnimationSlideDown;
-    private Animation mAnimationFadeOut;
-    private AnimationSet mAnimationSet;
+    private Animation mAnimationSlideUp, mAnimationSlideDown, mAnimationFadeIn, mAnimationFadeOut;
+    private AnimationSet mAnimationSet, mAnimationNextImageSet;
 
     private int[] mImageBackground = new int[]{
             R.drawable.onboarding_image_1,
@@ -48,9 +45,11 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     private void setUpView() {
-        mAnimationSet = new AnimationSet(false);
+        mAnimationSet = new AnimationSet(true);
+        mAnimationNextImageSet = new AnimationSet(true);
         mAnimationSlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
         mAnimationSlideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        mAnimationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
         mAnimationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -85,14 +84,19 @@ public class OnBoardingActivity extends AppCompatActivity {
     public void startImageAnimation(final int position) {
         mAnimationSet.addAnimation(mAnimationSlideUp);
         mAnimationSet.addAnimation(mAnimationFadeOut);
+        mAnimationNextImageSet.addAnimation(mAnimationFadeIn);
+        mAnimationNextImageSet.addAnimation(mAnimationSlideDown);
         mAnimationSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                onBoardingNextImage.setVisibility(View.VISIBLE);
+                onBoardingNextImage.setImageResource(mImageBackground[position]);
+                onBoardingNextImage.startAnimation(mAnimationNextImageSet);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                onBoardingNextImage.setVisibility(View.GONE);
                 onBoardingImage.setImageResource(mImageBackground[position]);
             }
 
