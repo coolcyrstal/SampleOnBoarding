@@ -22,15 +22,14 @@ public class OnBoardingActivity extends AppCompatActivity {
     @BindView(R.id.onboarding_image)
     ImageView onBoardingImage;
 
-
+    private int mViewPagerTotalPage;
+    private Animation animation_slide_up;
+    private Animation animation_slide_down;
     private int[] imageBackground = new int[]{
             R.drawable.onboarding_image_1,
             R.drawable.onboarding_image_2,
             R.drawable.onboarding_image_3
     };
-    private int mViewPagerTotalPage;
-    private Animation animation_slide_up;
-    private Animation animation_slide_down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +67,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                onBoardingImage.startAnimation(animation_slide_up);
-                onBoardingImage.setImageResource(imageBackground[position]);
+                startImageAnimation(position);
             }
 
             @Override
@@ -78,7 +76,12 @@ public class OnBoardingActivity extends AppCompatActivity {
         });
     }
 
-    private void setAnimation(){
+    public void startImageAnimation(int position) {
+        onBoardingImage.startAnimation(animation_slide_up);
+        onBoardingImage.setImageResource(imageBackground[position]);
+    }
+
+    private void setAnimation() {
         animation_slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
         animation_slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
     }
